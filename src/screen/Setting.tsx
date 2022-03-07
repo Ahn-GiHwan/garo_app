@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useCallback} from 'react';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components/native';
@@ -31,16 +32,25 @@ function Setting() {
   const {isDark} = useSelector((state: RootState) => state.theme);
   const dispatch = useAppDispatch();
 
-  const onChangeThemeMode = useCallback(() => {
+  const onChangeThemeMode = useCallback(async () => {
     dispatch(themeSlice.actions.setToggle());
-  }, [dispatch]);
+    await AsyncStorage.setItem('isDark', String(!isDark));
+  }, [dispatch, isDark]);
 
   return (
     <Safe>
       <Container>
         <Row>
           <Title>다크 모드</Title>
-          <Switch value={isDark} onValueChange={onChangeThemeMode} />
+          <Switch
+            value={isDark}
+            onValueChange={onChangeThemeMode}
+            trackColor={{
+              false: '#a09e9f',
+              true: '#63c963',
+            }}
+            thumbColor={'#9e9e9b'}
+          />
         </Row>
       </Container>
     </Safe>
