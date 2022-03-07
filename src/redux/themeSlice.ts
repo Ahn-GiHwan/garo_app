@@ -11,6 +11,9 @@ const themeSlice = createSlice({
     setToggle(state) {
       state.isDark = !state.isDark;
     },
+    setInit(state, action) {
+      state.isDark = action.payload;
+    },
   },
 });
 
