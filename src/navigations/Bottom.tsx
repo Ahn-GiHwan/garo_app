@@ -5,6 +5,7 @@ import Map from '../screen/Map';
 import Setting from '../screen/Setting';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/reducer';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,10 +23,34 @@ function Bottom() {
         tabBarStyle: {
           backgroundColor: isDark ? 'black' : 'white',
         },
+        tabBarLabelStyle: {
+          // fontSize: 12,
+        },
       }}>
-      <Tab.Screen name="Map" component={Map} />
-      <Tab.Screen name="Chart" component={Chart} />
-      <Tab.Screen name="Setting" component={Setting} />
+      <Tab.Screen
+        name="Map"
+        component={Map}
+        options={{
+          tabBarLabel: '지도',
+          tabBarIcon: ({focused, color, size}) => <Ionicons name={focused ? 'map' : 'map-outline'} color={color} size={size} />,
+        }}
+      />
+      <Tab.Screen
+        name="Chart"
+        component={Chart}
+        options={{
+          tabBarLabel: '차트',
+          tabBarIcon: ({focused, color, size}) => <Ionicons name={focused ? 'bar-chart' : 'bar-chart-outline'} color={color} size={size} />,
+        }}
+      />
+      <Tab.Screen
+        name="Setting"
+        component={Setting}
+        options={{
+          tabBarLabel: '설정',
+          tabBarIcon: ({focused, color, size}) => <Ionicons name={focused ? 'settings' : 'settings-outline'} color={color} size={size} />,
+        }}
+      />
     </Tab.Navigator>
   );
 }
