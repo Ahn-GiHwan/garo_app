@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^1.8.0",
     "@types/styled-components": "^5.1.24",
     "@types/styled-components-react-native": "^5.1.3",
+    "axios": "^0.26.0",
     "react": "17.0.2",
     "react-native": "0.67.3",
     "react-native-nmap": "^0.0.66",
