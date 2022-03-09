@@ -37,7 +37,7 @@ function Map() {
     setIsList(prev => !prev);
   }, []);
 
-  const renderItem = useCallback(({item}) => <EachLocList item={item} />, []);
+  const renderItem = useCallback(({item: {id, borough}}) => <EachLocList id={id} borough={borough} />, []);
 
   if (isLoading) {
     return <Loading />;
@@ -45,7 +45,7 @@ function Map() {
     return (
       <Container>
         <NaverMap isList={isList} />
-        <FlatList data={data} keyExtractor={item => item.id} renderItem={renderItem} />
+        <FlatList data={data} keyExtractor={(item: any) => item.id} renderItem={renderItem} />
         <ListButton onPress={onIsListToggle}>
           <Icon name={isList ? 'close' : 'list'} size={25} />
         </ListButton>
