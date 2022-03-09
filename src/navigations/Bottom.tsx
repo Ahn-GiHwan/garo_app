@@ -9,6 +9,7 @@ import Setting from '../screen/Setting';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/reducer';
 import HeaderLeft from '../components/HeaderLeft';
+import HeaderRight from '../components/HeaderRight';
 
 export type BottomParamList = {
   Map: {name?: string};
@@ -60,6 +61,7 @@ function Bottom() {
           tabBarLabel: '지도',
           tabBarIcon: ({focused, color, size}) => <Ionicons name={focused ? 'map' : 'map-outline'} color={color} size={size} />,
           headerLeft: HeaderLeft,
+          headerRight: HeaderRight,
         }}
       />
       <Tab.Screen
@@ -69,6 +71,7 @@ function Bottom() {
           tabBarLabel: '차트',
           tabBarIcon: ({focused, color, size}) => <Ionicons name={focused ? 'bar-chart' : 'bar-chart-outline'} color={color} size={size} />,
           headerLeft: HeaderLeft,
+          headerRight: HeaderRight,
         }}
       />
       <Tab.Screen
