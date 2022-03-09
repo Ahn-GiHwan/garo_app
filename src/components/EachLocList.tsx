@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {Text, View} from '../style/common';
+import {Text} from '../style/common';
 
 const Container = styled.TouchableOpacity`
   justify-content: space-around;
@@ -13,10 +13,10 @@ const Borough = styled(Text)`
   font-size: 20px;
 `;
 
-function EachLocList({item}) {
+function EachLocList({id, borough}: {id: number; borough: string}) {
   return (
-    <Container>
-      <Borough>{item.borough}</Borough>
+    <Container key={id}>
+      <Borough>{borough}</Borough>
     </Container>
   );
 }
