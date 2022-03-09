@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {Dimensions, Platform, ActivityIndicator} from 'react-native';
+import {ActivityIndicator} from 'react-native';
 import styled from 'styled-components/native';
 import NaverMap from '../components/NaverMap';
 import EachLocList from '../components/EachLocList';
@@ -9,6 +9,12 @@ import {RootState} from '../redux/reducer';
 import {View} from '../style/common';
 import {useQuery} from 'react-query';
 import {getBoroughInNamesFetch, getBoroughNameFetch} from '../../api';
+
+const LoadingContainer = styled(View)`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Container = styled(View)`
   flex: 1;
@@ -42,21 +48,23 @@ function Map() {
 
   const renderItem = useCallback(({item}) => <EachLocList item={item} />, []);
 
-  return (
-    <Container>
-      {isLoading ? (
+  if (isLoading) {
+    return (
+      <LoadingContainer>
         <ActivityIndicator color={isDark ? 'white' : 'black'} size="large" />
-      ) : (
-        <>
-          <NaverMap isList={isList} />
-          <FlatList data={data} keyExtractor={item => item.id} renderItem={renderItem} />
-          <ListButton onPress={onIsListToggle}>
-            <Icon name={isList ? 'close' : 'list'} color={isDark ? 'white' : 'black'} size={25} />
-          </ListButton>
-        </>
-      )}
-    </Container>
-  );
+      </LoadingContainer>
+    );
+  } else {
+    return (
+      <Container>
+        <NaverMap isList={isList} />
+        <FlatList data={data} keyExtractor={item => item.id} renderItem={renderItem} />
+        <ListButton onPress={onIsListToggle}>
+          <Icon name={isList ? 'close' : 'list'} color={isDark ? 'white' : 'black'} size={25} />
+        </ListButton>
+      </Container>
+    );
+  }
 }
 
 export default Map;
