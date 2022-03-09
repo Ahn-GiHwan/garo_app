@@ -16,13 +16,15 @@ const Safe = styled(SafeAreaView)`
 `;
 
 const Container = styled.View`
-  padding: 10px;
+  padding-horizontal: 10px;
+  padding-vertical: 20px;
 `;
 
 const Row = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
   padding-bottom: 20px;
   border-bottom-width: 1px;
   border-bottom-color: #f1efef;
@@ -39,10 +41,6 @@ const RightView = styled.View`
 `;
 
 const Switch = styled.Switch``;
-
-const Bridge = styled.View`
-  height: 20px;
-`;
 
 function Setting() {
   const {isDark} = useSelector((state: RootState) => state.theme);
@@ -67,35 +65,54 @@ function Setting() {
     }
   }, []);
 
+  const menus = [
+    {
+      id: 0,
+      name: '다크 모드',
+      onPress: onChangeThemeMode,
+      component: (
+        <Switch
+          value={isDark}
+          onValueChange={onChangeThemeMode}
+          trackColor={{
+            false: '#a09e9f',
+            true: '#63c963',
+          }}
+          thumbColor="white"
+        />
+      ),
+    },
+    {
+      id: 1,
+      name: '홈으로',
+      onPress: onGoHome,
+      component: (
+        <RightView>
+          <Icon name="home-outline" color={isDark ? 'white' : 'black'} size={30} />
+        </RightView>
+      ),
+    },
+    {
+      id: 2,
+      name: '개발자',
+      onPress: onGoGithub,
+      component: (
+        <RightView>
+          <Icon name="logo-github" color={isDark ? 'white' : 'black'} size={30} />
+        </RightView>
+      ),
+    },
+  ];
+
   return (
     <Safe>
       <Container>
-        <Row onPress={onChangeThemeMode}>
-          <Title>다크 모드</Title>
-          <Switch
-            value={isDark}
-            onValueChange={onChangeThemeMode}
-            trackColor={{
-              false: '#a09e9f',
-              true: '#63c963',
-            }}
-            thumbColor="white"
-          />
-        </Row>
-        <Bridge />
-        <Row onPress={onGoHome}>
-          <Title>홈으로</Title>
-          <RightView>
-            <Icon name="home-outline" color={isDark ? 'white' : 'black'} size={30} />
-          </RightView>
-        </Row>
-        <Bridge />
-        <Row onPress={onGoGithub}>
-          <Title>개발자</Title>
-          <RightView>
-            <Icon name="logo-github" color={isDark ? 'white' : 'black'} size={30} />
-          </RightView>
-        </Row>
+        {menus.map(({id, name, onPress, component}) => (
+          <Row key={id} onPress={onPress}>
+            <Title>{name}</Title>
+            {component}
+          </Row>
+        ))}
       </Container>
     </Safe>
   );
