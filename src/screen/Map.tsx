@@ -1,20 +1,12 @@
 import React, {useCallback, useState} from 'react';
-import {ActivityIndicator} from 'react-native';
 import styled from 'styled-components/native';
 import NaverMap from '../components/NaverMap';
 import EachLocList from '../components/EachLocList';
 import Icon from '../components/Icon';
-import {useSelector} from 'react-redux';
-import {RootState} from '../redux/reducer';
 import {View} from '../style/common';
 import {useQuery} from 'react-query';
-import {getBoroughInNamesFetch, getBoroughNameFetch} from '../../api';
-
-const LoadingContainer = styled(View)`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
+import {getBoroughNameFetch} from '../../api';
+import Loading from '../components/Loading';
 
 const Container = styled(View)`
   flex: 1;
@@ -39,7 +31,6 @@ const ListButton = styled.Pressable`
 
 function Map() {
   const {isLoading, data} = useQuery('getBoroughName', getBoroughNameFetch);
-  const {isDark} = useSelector((state: RootState) => state.theme);
   const [isList, setIsList] = useState(false);
 
   const onIsListToggle = useCallback((): void => {
@@ -49,11 +40,7 @@ function Map() {
   const renderItem = useCallback(({item}) => <EachLocList item={item} />, []);
 
   if (isLoading) {
-    return (
-      <LoadingContainer>
-        <ActivityIndicator color={isDark ? 'white' : 'black'} size="large" />
-      </LoadingContainer>
-    );
+    return <Loading />;
   } else {
     return (
       <Container>
