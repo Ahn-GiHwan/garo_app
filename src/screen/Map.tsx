@@ -60,7 +60,7 @@ function Map() {
         <NaverMap isList={isList} />
         <FlatList data={data} keyExtractor={item => item.id} renderItem={renderItem} />
         <ListButton onPress={onIsListToggle}>
-          <Icon name={isList ? 'close' : 'list'} color={isDark ? 'white' : 'black'} size={25} />
+          <Icon name={isList ? 'close' : 'list'} size={25} />
         </ListButton>
       </Container>
     );

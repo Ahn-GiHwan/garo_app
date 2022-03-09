@@ -1,9 +1,7 @@
 import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
 import {NativeStackParamList} from '../navigations/NativeStack';
-import {RootState} from '../redux/reducer';
 import Icon from './Icon';
 
 const Container = styled.TouchableOpacity`
@@ -12,7 +10,6 @@ const Container = styled.TouchableOpacity`
 `;
 
 function HeaderLeft() {
-  const {isDark} = useSelector((state: RootState) => state.theme);
   const navigation = useNavigation<NavigationProp<NativeStackParamList>>();
 
   const onGoHome = useCallback(() => {
@@ -21,7 +18,7 @@ function HeaderLeft() {
 
   return (
     <Container onPress={onGoHome}>
-      <Icon name="home-outline" color={isDark ? 'white' : 'black'} size={20} />
+      <Icon name="home-outline" size={20} />
     </Container>
   );
 }
