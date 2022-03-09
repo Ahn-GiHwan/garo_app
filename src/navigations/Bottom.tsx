@@ -6,13 +6,33 @@ import Setting from '../screen/Setting';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/reducer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {Platform} from 'react-native';
+import LeftHeader from '../components/LeftHeader';
+
+export type BottomParamList = {
+  Map: {name?: string};
+  Chart: {name?: string};
+  Setting: undefined;
+};
+
+type ParamList = {
+  Bottom: {
+    name?: string;
+  };
+};
 
 const Tab = createBottomTabNavigator();
 
 function Bottom() {
   const {isDark} = useSelector((state: RootState) => state.theme);
+  const {
+    params: {name},
+  } = useRoute<RouteProp<ParamList, 'Bottom'>>();
+
   return (
     <Tab.Navigator
+      initialRouteName={name}
       screenOptions={{
         headerStyle: {
           backgroundColor: isDark ? 'black' : 'white',
@@ -20,11 +40,17 @@ function Bottom() {
         headerTitleStyle: {
           color: isDark ? 'white' : 'black',
         },
+        headerTitleAlign: 'center',
         tabBarStyle: {
+          height: Platform.OS === 'android' ? 70 : 79,
           backgroundColor: isDark ? 'black' : 'white',
         },
+        tabBarIconStyle: {
+          marginTop: Platform.OS === 'android' ? 10 : 0,
+        },
         tabBarLabelStyle: {
-          // fontSize: 12,
+          marginBottom: Platform.OS === 'android' ? 12 : 0,
+          fontSize: 12,
         },
       }}>
       <Tab.Screen
@@ -33,6 +59,10 @@ function Bottom() {
         options={{
           tabBarLabel: '지도',
           tabBarIcon: ({focused, color, size}) => <Ionicons name={focused ? 'map' : 'map-outline'} color={color} size={size} />,
+          headerLeft: LeftHeader,
+          headerLeftContainerStyle: {
+            paddingLeft: 15,
+          },
         }}
       />
       <Tab.Screen
@@ -41,6 +71,10 @@ function Bottom() {
         options={{
           tabBarLabel: '차트',
           tabBarIcon: ({focused, color, size}) => <Ionicons name={focused ? 'bar-chart' : 'bar-chart-outline'} color={color} size={size} />,
+          headerLeft: LeftHeader,
+          headerLeftContainerStyle: {
+            paddingLeft: 15,
+          },
         }}
       />
       <Tab.Screen
