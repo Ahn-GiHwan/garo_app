@@ -1,14 +1,14 @@
 import React from 'react';
+import {Platform} from 'react-native';
+import {RouteProp, useRoute} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Chart from '../screen/Chart';
 import Map from '../screen/Map';
 import Setting from '../screen/Setting';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/reducer';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {RouteProp, useRoute} from '@react-navigation/native';
-import {Platform} from 'react-native';
-import LeftHeader from '../components/LeftHeader';
+import HeaderLeft from '../components/HeaderLeft';
 
 export type BottomParamList = {
   Map: {name?: string};
@@ -59,10 +59,7 @@ function Bottom() {
         options={{
           tabBarLabel: '지도',
           tabBarIcon: ({focused, color, size}) => <Ionicons name={focused ? 'map' : 'map-outline'} color={color} size={size} />,
-          headerLeft: LeftHeader,
-          headerLeftContainerStyle: {
-            paddingLeft: 15,
-          },
+          headerLeft: HeaderLeft,
         }}
       />
       <Tab.Screen
@@ -71,10 +68,7 @@ function Bottom() {
         options={{
           tabBarLabel: '차트',
           tabBarIcon: ({focused, color, size}) => <Ionicons name={focused ? 'bar-chart' : 'bar-chart-outline'} color={color} size={size} />,
-          headerLeft: LeftHeader,
-          headerLeftContainerStyle: {
-            paddingLeft: 15,
-          },
+          headerLeft: HeaderLeft,
         }}
       />
       <Tab.Screen
