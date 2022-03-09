@@ -5,7 +5,7 @@ function Chart() {
   return (
     <SafeAreaView>
       <View>
-        <Text>Chart</Text>
+        <Text>Chart!!!</Text>
       </View>
     </SafeAreaView>
   );
