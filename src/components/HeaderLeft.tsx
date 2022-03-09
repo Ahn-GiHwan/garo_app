@@ -8,9 +8,10 @@ import Icon from './Icon';
 
 const Container = styled.TouchableOpacity`
   justify-content: center;
+  margin-left: 15px;
 `;
 
-function LeftHeader() {
+function HeaderLeft() {
   const {isDark} = useSelector((state: RootState) => state.theme);
   const navigation = useNavigation<NavigationProp<NativeStackParamList>>();
 
@@ -25,4 +26,4 @@ function LeftHeader() {
   );
 }
 
-export default LeftHeader;
+export default HeaderLeft;
