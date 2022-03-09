@@ -31,7 +31,7 @@ function AppInner() {
   }, [dispatch]);
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
+      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} backgroundColor={isDark ? 'transparent' : 'white'} />
       <QueryClientProvider client={queryClient}>
         <NativeStack />
       </QueryClientProvider>
