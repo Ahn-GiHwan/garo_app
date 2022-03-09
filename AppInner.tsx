@@ -4,10 +4,13 @@ import {useSelector} from 'react-redux';
 import {ThemeProvider} from 'styled-components/native';
 import {RootState} from './src/redux/reducer';
 import {darkTheme, lightTheme} from './src/style/theme';
-import Bottom from './src/navigations/Bottom';
+import NativeStack from './src/navigations/NativeStack';
 import {useAppDispatch} from './src/redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import themeSlice from './src/redux/themeSlice';
+import {QueryClient, QueryClientProvider} from 'react-query';
+
+const queryClient = new QueryClient();
 
 function AppInner() {
   const {isDark} = useSelector((state: RootState) => state.theme);
@@ -29,7 +32,9 @@ function AppInner() {
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
-      <Bottom />
+      <QueryClientProvider client={queryClient}>
+        <NativeStack />
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }
