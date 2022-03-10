@@ -2,15 +2,22 @@ import React from 'react';
 import {View, Dimensions, Alert} from 'react-native';
 import NaverMapView, {Marker, Path} from 'react-native-nmap';
 
-function NaverMap({isList}: {isList: boolean}) {
+interface Igeocode {
+  latitude: number;
+  longitude: number;
+}
+
+function NaverMap({isList, geocode}: {isList: boolean; geocode: Igeocode}) {
+  const latitude = geocode?.latitude;
+  const longitude = geocode?.longitude;
   return (
     <NaverMapView
       style={{width: '100%', height: isList ? '60%' : '100%'}}
       zoomControl={false}
       center={{
         zoom: 10,
-        latitude: 37.51,
-        longitude: 126.9,
+        latitude: latitude || 37.51,
+        longitude: longitude || 126.9,
       }}>
       <Marker
         coordinate={{
