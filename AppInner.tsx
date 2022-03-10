@@ -20,8 +20,10 @@ function AppInner() {
     async function getIsDarkToStorage() {
       try {
         const result = await AsyncStorage.getItem('isDark');
-        if (result !== null) {
-          dispatch(themeSlice.actions.setInit(Boolean(result)));
+        if (result === 'false') {
+          dispatch(themeSlice.actions.setInit(false));
+        } else if (result === 'true') {
+          dispatch(themeSlice.actions.setInit(true));
         }
       } catch (error) {
         Alert.alert('AppInner Error');
@@ -29,6 +31,7 @@ function AppInner() {
     }
     getIsDarkToStorage();
   }, [dispatch]);
+
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} backgroundColor={isDark ? 'transparent' : 'white'} />
