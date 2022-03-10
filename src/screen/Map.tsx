@@ -57,7 +57,7 @@ function Map() {
     [onClickBorough],
   );
 
-  if (isLoading || loading) {
+  if (isLoading) {
     return <Loading />;
   } else {
     return (
@@ -67,6 +67,7 @@ function Map() {
         <ListButton onPress={onIsListToggle}>
           <Icon name={isList ? 'close' : 'list'} size={25} />
         </ListButton>
+        {loading && <Loading blur={loading} />}
       </Container>
     );
   }
