@@ -13,9 +13,9 @@ const Borough = styled(Text)`
   font-size: 20px;
 `;
 
-function EachLocList({id, borough}: {id: number; borough: string}) {
+function EachLocList({id, borough, onClickBorough}: {id: number; borough: string; onClickBorough: any}) {
   return (
-    <Container key={id}>
+    <Container key={id} onPress={() => onClickBorough(borough)}>
       <Borough>{borough}</Borough>
     </Container>
   );
