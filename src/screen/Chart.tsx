@@ -1,12 +1,12 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {Platform} from 'react-native';
 import styled from 'styled-components/native';
 import {useQuery} from 'react-query';
-import {getBoroughNameFetch} from '../../api';
 import Loading from '../components/Loading';
 import {Text, View} from '../style/common';
 import Icon from '../components/Icon';
 import BoroughChart from '../components/BoroughChart';
+import {getBoroughsFetch, getChartDataFetch} from '../apis/chart';
 
 const Container = styled.View`
   flex: 1;
@@ -73,9 +73,11 @@ const TransFormButton = styled.TouchableOpacity`
 `;
 
 function Chart() {
-  const {isLoading, data} = useQuery('getBoroughName', getBoroughNameFetch);
-  const [selectBorough, setSelectBorough] = useState('강남구');
+  const {isLoading: boroughListLoading, data: boroughList} = useQuery('getBoroughName', getBoroughsFetch);
+  const {isLoading, data} = useQuery('getChartData', getChartDataFetch);
+  const [selectBorough, setSelectBorough] = useState('전체');
   const [verticalMode, setVerticalMode] = useState(false);
+  const showData = useMemo(() => data?.filter(item => item.title === selectBorough)[0].data, [data, selectBorough]);
 
   const onClickBorough = useCallback(borough => {
     setSelectBorough(borough);
@@ -96,7 +98,7 @@ function Chart() {
     [onClickBorough, selectBorough],
   );
 
-  if (isLoading) {
+  if (boroughListLoading || isLoading) {
     return <Loading />;
   } else {
     return (
@@ -106,9 +108,9 @@ function Chart() {
             <Icon name="location-outline" size={20} />
             <TitleText>지역선택</TitleText>
           </TitleView>
-          <BoroughList data={data} keyExtractor={(item: any) => item.id} renderItem={renderItem} ItemSeparatorComponent={Empty} />
+          <BoroughList data={boroughList} keyExtractor={(item: any) => item.id} renderItem={renderItem} ItemSeparatorComponent={Empty} />
           <BoroughChartView vertical={verticalMode}>
-            <BoroughChart vertical={verticalMode} />
+            <BoroughChart showData={showData} vertical={verticalMode} />
           </BoroughChartView>
           <TransFormButton onPress={onVerticalToggle}>
             {Platform.OS === 'ios' ? (
