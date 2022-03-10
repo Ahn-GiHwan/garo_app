@@ -1,22 +1,26 @@
 import React, {useCallback, useState} from 'react';
+import {Platform} from 'react-native';
 import styled from 'styled-components/native';
 import {useQuery} from 'react-query';
 import {getBoroughNameFetch} from '../../api';
 import Loading from '../components/Loading';
 import {Text, View} from '../style/common';
 import Icon from '../components/Icon';
+import BoroughChart from '../components/BoroughChart';
 
-const Container = styled(View)`
+const Container = styled.View`
   flex: 1;
-  padding: 10px;
+  background-color: ${({theme}) => theme.chartBg};
 `;
 
 const Main = styled.View``;
 
-const TitleView = styled.View`
+const TitleView = styled(View)`
   flex-direction: row;
   align-items: center;
-  padding-vertical: 10px;
+  padding-top: 20px;
+  padding-horizontal: 10px;
+  padding-bottom: 10px;
 `;
 
 const TitleText = styled(Text)`
@@ -26,9 +30,11 @@ const TitleText = styled(Text)`
 `;
 
 const BoroughList = styled.FlatList.attrs({horizontal: true})`
-  padding-bottom: 7px;
   border-bottom-width: 2px;
   border-bottom-color: ${({theme}) => theme.color};
+  padding: 10px;
+  padding-bottom: 20px;
+  background-color: ${({theme}) => theme.bg};
 `;
 
 const BoroughView = styled.TouchableOpacity`
@@ -49,12 +55,34 @@ const BoroughText = styled(Text)`
   color: ${({select, theme}) => (select ? theme.bg : theme.color)};
 `;
 
+const BoroughChartView = styled.View`
+  margin-top: 100px;
+  transform: ${({vertical}) => (vertical ? 'rotate(90deg)' : null)};
+  border-radius: 5px;
+  padding-vertical: 10px;
+`;
+
+const TransFormButton = styled.TouchableOpacity`
+  position: absolute;
+  right: 10px;
+  bottom: -50px;
+  border-width: 1px;
+  border-radius: 20px;
+  padding: 10px;
+  background-color: white;
+`;
+
 function Chart() {
   const {isLoading, data} = useQuery('getBoroughName', getBoroughNameFetch);
   const [selectBorough, setSelectBorough] = useState('강남구');
+  const [verticalMode, setVerticalMode] = useState(false);
 
   const onClickBorough = useCallback(borough => {
     setSelectBorough(borough);
+  }, []);
+
+  const onVerticalToggle = useCallback(() => {
+    setVerticalMode(prev => !prev);
   }, []);
 
   const renderItem = useCallback(
@@ -79,6 +107,16 @@ function Chart() {
             <TitleText>지역선택</TitleText>
           </TitleView>
           <BoroughList data={data} keyExtractor={(item: any) => item.id} renderItem={renderItem} ItemSeparatorComponent={Empty} />
+          <BoroughChartView vertical={verticalMode}>
+            <BoroughChart vertical={verticalMode} />
+          </BoroughChartView>
+          <TransFormButton onPress={onVerticalToggle}>
+            {Platform.OS === 'ios' ? (
+              <Icon name={verticalMode ? 'phone-portrait-outline' : 'phone-landscape-outline'} color="black" size={20} />
+            ) : (
+              <Icon name={verticalMode ? 'phone-portrait-sharp' : 'phone-landscape-sharp'} color="black" size={20} />
+            )}
+          </TransFormButton>
         </Main>
       </Container>
     );
