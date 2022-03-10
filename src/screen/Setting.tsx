@@ -56,9 +56,9 @@ function Setting() {
     navigation.navigate('Home');
   }, [navigation]);
 
-  const onGoGithub = useCallback(async () => {
+  const onOpenURL = useCallback(async url => {
     try {
-      await Linking.openURL('https://github.com/Ahn-GiHwan');
+      await Linking.openURL(url);
     } catch (error) {
       console.log(error);
       Alert.alert('error');
@@ -88,17 +88,27 @@ function Setting() {
       onPress: onGoHome,
       component: (
         <RightView>
-          <Icon name="home-outline" color={isDark ? 'white' : 'black'} size={30} />
+          <Icon name="home-outline" size={30} />
         </RightView>
       ),
     },
     {
       id: 2,
       name: '개발자',
-      onPress: onGoGithub,
+      onPress: () => onOpenURL('https://github.com/Ahn-GiHwan'),
       component: (
         <RightView>
-          <Icon name="logo-github" color={isDark ? 'white' : 'black'} size={30} />
+          <Icon name="logo-github" size={30} />
+        </RightView>
+      ),
+    },
+    {
+      id: 3,
+      name: '파일 다운로드',
+      onPress: () => onOpenURL('http://data.seoul.go.kr/dataList/OA-15069/F/1/datasetView.do'),
+      component: (
+        <RightView>
+          <Icon name="md-document-attach-outline" size={30} />
         </RightView>
       ),
     },
