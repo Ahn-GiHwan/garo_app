@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useCallback} from 'react';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components/native';
@@ -15,9 +16,10 @@ function HeaderRight() {
   const {isDark} = useSelector((state: RootState) => state.theme);
   const dispatch = useAppDispatch();
 
-  const onThemeToggle = useCallback(() => {
+  const onThemeToggle = useCallback(async () => {
     dispatch(themeSlice.actions.setToggle());
-  }, [dispatch]);
+    await AsyncStorage.setItem('isDark', String(!isDark));
+  }, [dispatch, isDark]);
 
   return (
     <Container onPress={onThemeToggle}>
