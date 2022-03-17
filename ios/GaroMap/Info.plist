@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>GaroMap</string>
+	<string>가로휴지통</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -37,7 +37,7 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSCameraUsageDescription</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>현재 위치 확인을 위해서 위치 권한이 필요합니다.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>현재 위치 확인을 위해서 위치 권한이 필요합니다.</string>
@@ -45,6 +45,7 @@
 	<string>현재 위치 확인을 위해서 위치 권한이 필요합니다.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>현재 위치 확인을 위해서 위치 권한이 필요합니다.</string>
+	<key>UIAppFonts</key>
 	<array>
 		<string>FontAwesome.ttf</string>
 		<string>Ionicons.ttf</string>
