@@ -1,11 +1,7 @@
 import React from 'react';
 import {View, Dimensions, Alert} from 'react-native';
 import NaverMapView, {Marker, Path} from 'react-native-nmap';
-
-interface Igeocode {
-  latitude: number;
-  longitude: number;
-}
+import {Igeocode} from '../screen/Map';
 
 function NaverMap({isList, geocode}: {isList: boolean; geocode: Igeocode}) {
   const latitude = geocode?.latitude;
@@ -15,14 +11,14 @@ function NaverMap({isList, geocode}: {isList: boolean; geocode: Igeocode}) {
       style={{width: '100%', height: isList ? '60%' : '100%'}}
       zoomControl={false}
       center={{
-        zoom: 10,
+        zoom: 13,
         latitude: latitude || 37.51,
         longitude: longitude || 126.9,
       }}>
       <Marker
         coordinate={{
-          latitude: 37.51,
-          longitude: 126.9,
+          latitude,
+          longitude,
         }}
         onClick={() => Alert.alert('Click')}
         pinColor="red"
