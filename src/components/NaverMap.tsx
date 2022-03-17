@@ -11,7 +11,7 @@ function NaverMap({isList, geocode}: {isList: boolean; geocode: Igeocode}) {
       style={{width: '100%', height: isList ? '60%' : '100%'}}
       zoomControl={false}
       center={{
-        zoom: 13,
+        zoom: 14,
         latitude: latitude || 37.51,
         longitude: longitude || 126.9,
       }}>
