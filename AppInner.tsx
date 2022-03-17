@@ -9,12 +9,15 @@ import {useAppDispatch} from './src/redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import themeSlice from './src/redux/themeSlice';
 import {QueryClient, QueryClientProvider} from 'react-query';
+import usePermissions from './src/hooks/usePermissions';
 
 const queryClient = new QueryClient();
 
 function AppInner() {
   const {isDark} = useSelector((state: RootState) => state.theme);
   const dispatch = useAppDispatch();
+
+  usePermissions();
 
   useEffect(() => {
     async function getIsDarkToStorage() {
